@@ -47,9 +47,11 @@ echo $all
 
 for i in $all; do
     echo $i
-    curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/pool/default
     
-    if [ $? == 0 ]; then
+    
+    if curl -u $DB_USER:$DB_PASSW --output /dev/null --silent --head --fail "http://$i:8091/pool/default"; then
+        
+        
         sleep 10
         
         curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/controller/failOver
@@ -68,15 +70,16 @@ for i in $all; do
         
         couchbase-cli rebalance --cluster="$i:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
         
-        sleep 30
         
-        if [ $? == 0 ]; then
+            
+            
             
             echo "ok on $i"
             
+            sleep 30
+            
             break
             
-        fi
         
     else
         
