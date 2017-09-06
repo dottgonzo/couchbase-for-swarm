@@ -2,7 +2,7 @@
 
 NOT READY
 
-This couchdb container works on a docker swarm and not need a persistent volumes, is made to be used with many replicas to be able to recover anything if SOME node fail, and to be used with a proxy like traefik.
+This couchdb container works on a docker swarm and not need persistent volumes, is made to be used with many replicas to be able to recover anything if SOME node fail, and to be used with a proxy like traefik.
 
 1) create your swarm, with managers and workers.
 
