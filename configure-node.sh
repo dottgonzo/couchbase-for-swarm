@@ -31,7 +31,7 @@ IP=$(ifconfig | grep $OVERLAYNET | sed 's/:/ /g' |awk '{print($3)}')
 sleeptime=$(( ( ( RANDOM % 10 )  + 1 ) * 10 ))
 
 echo "Sleeping ...$sleeptime"
-sleep sleeptime
+sleep $sleeptime
 
 
 
