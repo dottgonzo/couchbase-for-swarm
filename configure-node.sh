@@ -64,7 +64,7 @@ curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP $i:8091/controller/ejectNode
 
 
 fi
-sleep 5
+sleep 2
 
     couchbase-cli rebalance --cluster="$i:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
 
