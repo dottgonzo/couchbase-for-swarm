@@ -31,7 +31,7 @@ curl -i -u $DB_USER:$DB_PASSW -X POST http://127.0.0.1:8091/settings/indexes -d 
 
 echo "Type: $TYPE"
 
-  IP=`hostname -I | cut -d ' ' -f1`
+IP=`hostname -I | cut -d ' ' -f1`
 
 
 if [ "$TYPE" == "WORKER" ]; then
