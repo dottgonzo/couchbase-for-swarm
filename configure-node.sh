@@ -71,15 +71,15 @@ for i in $all; do
         couchbase-cli rebalance --cluster="$i:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
         
         
-            
-            
-            
-            echo "ok on $i"
-            
-            sleep 30
-            
-            break
-            
+        
+        
+        
+        echo "ok on $i"
+        
+        sleep 30
+        
+        break
+        
         
     else
         
