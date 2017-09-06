@@ -45,19 +45,18 @@ all=$(nmap -n -sP $OVERLAYNET.*  -oG - | awk '/Up$/{print $2}' | grep $OVERLAYNE
 for i in $all; do
 
 
-curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP $i:8091/controller/failOver
+curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/controller/failOver
 
 
-if [ $? == 0 ]; then
 
 sleep 5
 
-curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP $i:8091/controller/ejectNode
+curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/controller/ejectNode
 
 
 
 
-fi
+
 sleep 2
 
     couchbase-cli rebalance --cluster="$i:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
