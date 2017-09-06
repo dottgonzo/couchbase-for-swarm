@@ -30,53 +30,61 @@ IP=$(ifconfig | grep $OVERLAYNET | sed 's/:/ /g' |awk '{print($3)}')
 
 
 if [ "$TYPE" == "WORKER" ]; then
-  echo "Sleeping ..."
-  sleep 60
+    echo "Sleeping ..."
+    sleep 60
 fi
 
 
 
 ipslit=$(echo $IP | sed 's/\./ /g')
 
-OVERLAYNET="$(echo $ipslit| awk '{print($1)}').$(echo $ipslit| awk '{print($2)}').$(echo $ipslit| awk '{print($3)}')"
+OVERLAYNET=$(echo $ipslit| awk '{print($1)}').$(echo $ipslit| awk '{print($2)}').$(echo $ipslit| awk '{print($3)}')
 
-all=$(nmap -n -sP $OVERLAYNET.*  -oG - | awk '/Up$/{print $2}' | grep $OVERLAYNET | grep -v "$IP" | grep -v $OVERLAYNET.1)
+
+all=$(nmap -n -sP $OVERLAYNET.*  -oG - | grep "$OVERLAYNET" | grep -v "$IP" | grep -v $OVERLAYNET.1)
 
 for i in $all; do
-
-
-curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/controller/failOver
-
-
-
-sleep 5
-
-curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/controller/ejectNode
-
-
-
-
-
-sleep 2
-
-    couchbase-cli rebalance --cluster="$i:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
-
-if [ $? == 0 ]; then
-
-echo "ok on $i"
-
-break
-
-else
-
-echo "no $i"
-
-
-
-fi
-
-sleep 1
-
+    
+    curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/pool/default
+    
+    if [ $? == 0 ]; then
+        
+        curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/controller/failOver
+        
+        
+        
+        sleep 10
+        
+        curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/controller/ejectNode
+        
+        
+        
+        
+        
+        sleep 10
+        
+        couchbase-cli rebalance --cluster="$i:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
+        
+        if [ $? == 0 ]; then
+            
+            echo "ok on $i"
+            
+            break
+            
+        fi
+        
+    else
+        
+        echo "no $i"
+        
+        
+        
+    fi
+    
+    
+    
+    sleep 10
+    
 done
 
 
