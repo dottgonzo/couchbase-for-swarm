@@ -49,7 +49,7 @@ for i in $all; do
     echo $i
     
     
-    if curl -u $DB_USER:$DB_PASSW --output /dev/null --silent --head --fail "http://$i:8091/pool/default"; then
+    if curl -u $DB_USER:$DB_PASSW --output /dev/null --silent --head --fail "http://$i:8091/pools/default"; then
         
         
         sleep 10
