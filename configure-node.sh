@@ -41,14 +41,15 @@ ipslit=$(echo $IP | sed 's/\./ /g')
 OVERLAYNET=$(echo $ipslit| awk '{print($1)}').$(echo $ipslit| awk '{print($2)}').$(echo $ipslit| awk '{print($3)}')
 
 
-all=$(nmap -n -sP $OVERLAYNET.*  -oG - | grep "$OVERLAYNET" | grep -v "$IP" | grep -v $OVERLAYNET.1)
+all=$(nmap -sn "$OVERLAYNET.0/24"  -oG - | grep "$OVERLAYNET" | grep -v "$IP" | grep -v $OVERLAYNET.1)
 
 for i in $all; do
     
     curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/pool/default
     
     if [ $? == 0 ]; then
-        
+        sleep 10
+
         curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/controller/failOver
         
         
@@ -83,7 +84,7 @@ for i in $all; do
     
     
     
-    sleep 10
+    sleep 5
     
 done
 
