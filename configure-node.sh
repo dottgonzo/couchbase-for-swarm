@@ -46,7 +46,7 @@ all=$(nmap -sn $OVERLAYNET.0/24  -oG - | grep Host | grep $OVERLAYNET | grep -v 
 echo $all
 
 for i in $all; do
-    
+    echo $i
     curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/pool/default
     
     if [ $? == 0 ]; then
