@@ -91,7 +91,6 @@ for i in $all; do
     
     
     
-    sleep 5
     
 done
 
