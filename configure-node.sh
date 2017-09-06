@@ -28,11 +28,11 @@ echo "Type: $TYPE"
 
 IP=$(ifconfig | grep $OVERLAYNET | sed 's/:/ /g' |awk '{print($3)}')
 
+sleeptime=$(( ( ( RANDOM % 10 )  + 1 ) * 10 ))
 
-if [ "$TYPE" == "WORKER" ]; then
-    echo "Sleeping ..."
-    sleep 60
-fi
+echo "Sleeping ...$sleeptime"
+sleep sleeptime
+
 
 
 
