@@ -42,7 +42,7 @@ if [ "$TYPE" == "WORKER" ]; then
   echo "IP: " $IP
 
 
-curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP $COUCHBASE_MASTER:8091/controller/failOver
+curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$COUCHBASE_MASTER:8091/controller/failOver
 
 sleep 5
 
