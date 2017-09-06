@@ -60,7 +60,7 @@ sleep $sleeptime
         
         sleep 10
         
-        couchbase-cli rebalance --cluster="$COUCHBASE_MASTER:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
+        couchbase-cli server-add --cluster="$COUCHBASE_MASTER:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
         
         
         
@@ -108,7 +108,7 @@ for i in $all; do
         
         sleep 10
         
-        couchbase-cli rebalance --cluster="$i:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
+        couchbase-cli server-add --cluster="$i:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
         
         
         
