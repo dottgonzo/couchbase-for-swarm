@@ -38,10 +38,10 @@ fi
 
 ipslit=$(echo $IP | sed 's/\./ /g')
 
-OVERLAYNET=$(echo $ipslit| awk '{print($1)}').$(echo $ipslit| awk '{print($2)}').$(echo $ipslit| awk '{print($3)}')
+OVERLAYNET="$(echo $ipslit| awk '{print($1)}').$(echo $ipslit| awk '{print($2)}').$(echo $ipslit| awk '{print($3)}')"
 
 
-all=$(nmap -sn "$OVERLAYNET.0/24"  -oG - | grep "$OVERLAYNET" | grep -v "$IP" | grep -v $OVERLAYNET.1)
+all=$(nmap -sn $OVERLAYNET.0/24  -oG - | grep $OVERLAYNET | grep -v "$IP" | grep -v $OVERLAYNET.1)
 
 for i in $all; do
     
