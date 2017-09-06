@@ -68,6 +68,7 @@ for i in $all; do
 
 curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP $i:8091/controller/failOver
 
+sleep 5
 
 if [ $? == 0 ]; then
 
