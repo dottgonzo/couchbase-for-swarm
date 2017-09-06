@@ -51,7 +51,7 @@ for i in $all; do
     
     if [ $? == 0 ]; then
         sleep 10
-
+        
         curl -u $DB_USER:$DB_PASSW -d otpNode=ns_1@$IP http://$i:8091/controller/failOver
         
         
@@ -67,6 +67,8 @@ for i in $all; do
         sleep 10
         
         couchbase-cli rebalance --cluster="$i:8091" --user="$DB_USER" --password="$DB_PASSW" --server-add="$IP" --server-add-username="$DB_USER" --server-add-password="$DB_PASSW"
+        
+        sleep 30
         
         if [ $? == 0 ]; then
             
