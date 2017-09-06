@@ -7,11 +7,6 @@ set -m
 
 sleep 60
 
-if [ "$TYPE" == "MASTER" ]; then
-
-nmap -sP 10.0.16.*
-
-fi
 
 
 # Setup index and memory quota
@@ -31,13 +26,12 @@ curl -i -u $DB_USER:$DB_PASSW -X POST http://127.0.0.1:8091/settings/indexes -d 
 
 echo "Type: $TYPE"
 
-IP=`hostname -I | cut -d ' ' -f1`
+IP=$(ifconfig | grep $OVERLAYNET | sed 's/:/ /g' |awk '{print($3)}')
 
 
 if [ "$TYPE" == "WORKER" ]; then
   echo "Sleeping ..."
   sleep 60
-
 fi
 
 

@@ -1,6 +1,6 @@
 FROM couchbase:latest
 
-RUN apt update && apt install nmap jq -y
+RUN apt update && apt install nmap jq net-tools -y
 
 COPY configure-node.sh /opt/couchbase
 
